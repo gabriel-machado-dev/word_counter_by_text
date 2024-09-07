@@ -24,20 +24,20 @@ def print_title():
 
 def instructions():
     print(f'{YELLOW}{BOLD}Instructions: {RESET}')
-    print(f'{YELLOW}1. Enter a text with more than 10 words{RESET}')
-    print(f'{YELLOW}2. The text cannot contain numbers{RESET}')
+    print(f'{YELLOW}{BOLD}1. Enter a text with more than 5 words{RESET}')
+    print(f'{YELLOW}{BOLD}2. The text cannot contain numbers{RESET}')
     print('\n')
 
 def get_text():
     while True:
         text = input('Enter a text: ')
         print('\n')
-        if len(text.split()) >= 10 and not any(char.isdigit() for char in text) and text.strip():
+        if len(text.split()) >= 5 and not any(char.isdigit() for char in text) and text.strip():
             return text
         print(f'{RED}{BOLD}Invalid input: Please enter a non-empty text without numbers{RESET}\n')
 
 def count_words(text):
-    words = [word.lower().strip(",.!?;:") for word in text.split()]
+    words = [word.lower().strip("!@#$%^&*()__+=*/{[}],./?") for word in text.split()]
     word_count = {word: words.count(word) for word in set(words)}
 
     sorted_word_count = sorted(word_count.items(), key=lambda x: x[1], reverse=True)
