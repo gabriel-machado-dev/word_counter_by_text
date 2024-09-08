@@ -4,37 +4,50 @@ from time import sleep
 import os
 
 # Colors
-RED = '\033[91m'
-GREEN = '\033[92m'
-YELLOW = '\033[93m'
-BLUE = '\033[94m'
-MAGENTA = '\033[95m'
-CYAN = '\033[96m'
-RESET = '\033[0m'
+DEFAULT = '\033[0m'
+GREEN = '\033[1;32m'
+RED = '\033[1;31m'
+YELLOW = '\033[3m\033[1;33m'
+YELLOW2 = '\033[1;93m'
+BLUE = '\033[1;34m'
+MAGENTA = '\033[1;35m'
+CYAN = '\033[1;36m'
 BOLD = '\033[1m'
+BLINK = '\033[5m'
 
 def print_title():
-    print(CYAN + BOLD + r'''
+    print('''
 
-        ░█░█░█▀█░█▀▄░█▀▄░░░█▀▀░█▀█░█░█░█▀█░▀█▀░█▀▀░█▀▄
-        ░█▄█░█░█░█▀▄░█░█░░░█░░░█░█░█░█░█░█░░█░░█▀▀░█▀▄
-        ░▀░▀░▀▀▀░▀░▀░▀▀░░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀
+       {5} ░█░█░█▀█░█▀▄░█▀▄░░░█▀▀░█▀█░█░█░█▀█░▀█▀░█▀▀░█▀▄{0}
+       {6} ░█▄█░█░█░█▀▄░█░█░░░█░░░█░█░█░█░█░█░░█░░█▀▀░█▀▄{0}
+       {7} ░▀░▀░▀▀▀░▀░▀░▀▀░░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀{0}
+       
+         {6})    /\__/\ 
+         {6}( = (˶ᵔ ᵕ ᵔ˶)
+         {1}-------{6}U{1}-{6}U{1}----------------
+         {1}|                        |       |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+         {1}|  {3}Code Author: {2}Gabriel Machado  {0}{1}|       {3}GitHub: {2}https://github.com/gabriel-machado-dev{0}
+         {1}|      {3}Version: {2}1.0      {0}{1}|             
+         {1}|                        |       |_____________________________________________|
+         {1}--------------------------                        {6}\ (˶ᵔ ᵕ ᵔ˶) /{0}
+                                                            {6}\         /{0}
 
-        ''' + RESET)
+        '''.format(DEFAULT, GREEN, RED,YELLOW2
+                   ,YELLOW, BLINK, MAGENTA, CYAN))
 
 def instructions():
-    print(f'{YELLOW}{BOLD}Instructions: {RESET}')
-    print(f'{YELLOW}{BOLD}1. Enter a text with more than 5 words{RESET}')
-    print(f'{YELLOW}{BOLD}2. The text cannot contain numbers{RESET}')
+    print(f'{YELLOW2}{BOLD}Instructions: {DEFAULT}')
+    print(f'{YELLOW2}{BOLD}1. Enter a text with more than 5 words{DEFAULT}')
+    print(f'{YELLOW2}{BOLD}2. The text cannot contain numbers{DEFAULT}')
     print('\n')
 
 def get_text():
     while True:
-        text = input('Enter a text: ')
+        text = input(f'{BLINK}{BOLD}Enter a text: {DEFAULT}')
         print('\n')
         if len(text.split()) >= 5 and not any(char.isdigit() for char in text) and text.strip():
             return text
-        print(f'{RED}{BOLD}Invalid input: Please enter a non-empty text without numbers{RESET}\n')
+        print(f'{RED}{BOLD}Invalid input: Please enter a non-empty text without numbers{DEFAULT}\n')
 
 def count_words(text):
     words = [word.lower().strip("!@#$%^&*()__+=*/{[}],./?") for word in text.split()]
@@ -52,7 +65,7 @@ def count_words(text):
     console = Console()
     console.print(table)
     print('\n')
-    print(f'{CYAN}{BOLD}The most frequent word is "{sorted_word_count[0][0]}" which appears {sorted_word_count[0][1]} times{RESET}')
+    print(f'{CYAN}{BOLD}The most frequent word is "{sorted_word_count[0][0]}" which appears {sorted_word_count[0][1]} times{DEFAULT}')
 
 if __name__ == '__main__':
     print_title()
@@ -62,7 +75,7 @@ if __name__ == '__main__':
         run_again = input('Do you want to run the program again? (yes/no): ')
         if run_again.lower().strip() in ['yes', 'no']:
             if run_again.lower().strip() == 'no':
-                print(f'{YELLOW}{BOLD}Thank you for using the program!{RESET}')
+                print(f'{YELLOW}{BOLD}Thank you for using the program!{DEFAULT}')
                 sleep(2)
                 break
             else:
@@ -71,5 +84,5 @@ if __name__ == '__main__':
                 instructions()
                 count_words(get_text())
         else:
-            print(f'{RED}{BOLD}Invalid input: Please enter either "yes" or "no"{RESET}\n')
+            print(f'{RED}{BOLD}Invalid input: Please enter either "yes" or "no"{DEFAULT}\n')
 
