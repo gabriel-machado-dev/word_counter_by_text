@@ -31,8 +31,18 @@ python app.py
 ```
 
 2. Follow the instructions
-  - Enter a text with more than 10 words.
+  - Enter a text with more than 5 words.
   - Ensure the text does not contain numbers.
+
+  ![Screenshot_1](https://github.com/user-attachments/assets/c26d98ae-0827-46c5-9f34-68bba15f03e3)
+
+
+
+
+
+
+
+
 
 ## License
 
