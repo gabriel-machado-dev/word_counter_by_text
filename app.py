@@ -2,6 +2,7 @@ from rich.console import Console
 from rich.table import Table
 from time import sleep
 import os
+import re
 
 # Colors
 DEFAULT = '\033[0m'
@@ -38,22 +39,23 @@ def print_title():
 def instructions():
     print(f'{YELLOW2}{BOLD}Instructions: {DEFAULT}')
     print(f'{YELLOW2}{BOLD}1. Enter a text with more than 5 words{DEFAULT}')
-    print(f'{YELLOW2}{BOLD}2. The text cannot contain numbers{DEFAULT}')
     print('\n')
 
 def get_text():
     while True:
         text = input(f'{BLINK}{BOLD}Enter a text: {DEFAULT}')
         print('\n')
-        if len(text.split()) >= 5 and not any(char.isdigit() for char in text) and text.strip():
-            return text
-        print(f'{RED}{BOLD}Invalid input: Please enter a non-empty text without numbers{DEFAULT}\n')
+        if len(text.split()) > 5:
+            return text.strip()
+        print(f'{RED}{BOLD}Invalid input: Please enter a non-empty text{DEFAULT}\n')
 
 def count_words(text):
-    words = [word.lower().strip("!@#$%^&*()__+=*/{[}],./?") for word in text.split()]
-    word_count = {word: words.count(word) for word in set(words)}
+    
+    # Remove caracteres especiais e converte para minúsculas
+    words = [word.lower().strip(",.!?;:@#$%^&*()[{/}\]}") for word in text.split()]
+    word_count = {word: words.count(word) for word in set(words) if len(word) > 2}
 
-    sorted_word_count = sorted(word_count.items(), key=lambda x: x[1], reverse=True)
+    sorted_word_count = sorted(word_count.items(), key=lambda x: x[1])
 
     table = Table(title='Most Frequent Words', show_lines=True, row_styles=['dim', 'none'])
     table.add_column('Word', justify='center', style='cyan', no_wrap=True)
@@ -65,7 +67,7 @@ def count_words(text):
     console = Console()
     console.print(table)
     print('\n')
-    print(f'{CYAN}{BOLD}The most frequent word is "{sorted_word_count[0][0]}" which appears {sorted_word_count[0][1]} times{DEFAULT}')
+    print(f'{CYAN}{BOLD}The most frequent word is "{sorted_word_count[-1][0]}" which appears {sorted_word_count[-1][1]} times{DEFAULT}')
 
 if __name__ == '__main__':
     print_title()
